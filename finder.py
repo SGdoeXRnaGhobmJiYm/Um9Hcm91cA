@@ -1,4 +1,3 @@
-
 from lib.controllers import Controller
 from lib.arguments import parse_args
 import multiprocessing, requests, time

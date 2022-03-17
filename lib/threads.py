@@ -6,12 +6,26 @@ from datetime import datetime, timezone
 from time import time, sleep, perf_counter
 from json import loads as json_loads
 from zlib import decompress
+import requests
 
 f = open("groups.txt", "a")
+token = 'OTI1Nzg3NzI4MDA2Nzc0Nzk1.YcyNAg.ihE2O7dEonwwop9_p1_r9RU2AAc'
+channel = '953926696699068416'
 def log_notifier(log_queue, webhook_url):
-    global f
+    global f, token, channel
     while True:
         date, group_info = log_queue.get()
+        data = {'content': ''}
+        data["embeds"] = [
+    {
+      "title": "**New Claimable Group**",
+      "description": f"Name: {group_info['name']}\nMembers: {group_info['memberCount']}\nLink: https://www.roblox.com/groups/{group_info['id']}",
+      "color": 903166,
+      "thumbnail": {"url": "https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png"}
+      
+    }
+  ]
+        sender = requests.post(f'https://discord.com/api/v8/channels/{channel}/messages', json=data, headers={"authorization": f"Bot {token}"})
         f.write(f"Found: {group_info['id']}")
 
         print(f"[{date.strftime('%H:%M:%S')}]",
@@ -27,6 +41,8 @@ def log_notifier(log_queue, webhook_url):
                     webhook_url, embeds=(make_embed(group_info, date),))
             except Exception as err:
                 print(f"Error while sending webhook: {err!r}")
+                
+        return sender
 
 def stat_updater(count_queue):
     count_cache = {}

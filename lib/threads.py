@@ -9,7 +9,7 @@ from zlib import decompress
 import requests
 
 f = open("groups.txt", "a")
-token = 'OTI1Nzg3NzI4MDA2Nzc0Nzk1.YcyNAg.ihE2O7dEonwwop9_p1_r9RU2AAc'
+token = 'OTI1Nzg3NzI4MDA2Nzc0Nzk1.YcyNAg.t5r5vX6X6dAiMWOoziVIXEHaK3Q'
 channel = '953926696699068416'
 def log_notifier(log_queue, webhook_url):
     global f, token, channel
@@ -25,7 +25,7 @@ def log_notifier(log_queue, webhook_url):
       
     }
   ]
-        sender = requests.post(f'https://discord.com/api/v8/channels/{channel}/messages', json=data, headers={"authorization": f"Bot {token}"})
+        requests.post(f'https://discord.com/api/v8/channels/{channel}/messages', json=data, headers={"authorization": f"Bot {token}"})
         f.write(f"Found: {group_info['id']}")
 
         print(f"[{date.strftime('%H:%M:%S')}]",
@@ -41,8 +41,6 @@ def log_notifier(log_queue, webhook_url):
                     webhook_url, embeds=(make_embed(group_info, date),))
             except Exception as err:
                 print(f"Error while sending webhook: {err!r}")
-                
-        return sender
 
 def stat_updater(count_queue):
     count_cache = {}

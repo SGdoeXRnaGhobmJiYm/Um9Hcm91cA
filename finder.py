@@ -3,9 +3,9 @@ from lib.arguments import parse_args
 from colorama import Fore
 import multiprocessing, requests, time, pyfiglet
 fe = open("proxies.txt", "a")
-be = open("proxies.txt", "r")
+be = open("proxies.txt", "w")
 txt = pyfiglet.figlet_format(text="Sprites Tools!")
-print(f' {Fore.LIGHT_GREEN_EX}{txt}\n')
+print(f' {Fore.LIGHTGREEN_EX}{txt}\n')
 print(f' {Fore.RED}[+] Loading Program...\n')
 def scrape():
   global fe, be

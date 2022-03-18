@@ -133,7 +133,7 @@ value=f"**･Clothing Count**: `{clothingcount(group_info['id'])}`\n\n"),
           text="✫ RoGroup! | rogroup.tk ✫",
           icon_url='https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png'
         ),
-        timestamp=date.isoformat()
+        timestamp=date.isoformat(),
         author=dict(
           name="♢ RoGroup! ♢",
           icon_url='https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png'

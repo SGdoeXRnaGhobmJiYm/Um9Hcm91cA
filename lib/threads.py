@@ -6,27 +6,54 @@ from datetime import datetime, timezone
 from time import time, sleep, perf_counter
 from json import loads as json_loads
 from zlib import decompress
-import requests
+import requests, json, random
 
-f = open("groups.txt", "a")
-token = 'OTI1Nzg3NzI4MDA2Nzc0Nzk1.YcyNAg.t5r5vX6X6dAiMWOoziVIXEHaK3Q'
-channel = '953926696699068416'
+cookies = {".ROBLOSECURITY": "_|WARNING-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_406F5E2F5D8DA0516BAA20D8A00AFED2D3FB7653FE948F86817BF1C8A1DF7499D7FBC7C69B92E74B92E82F64A5DD4EB8A1165F9E70530F763757BEEBBEF23152A033C61C9ABC25BDE7DA1F6D47D8346F94AA12C557D563F4F9B38B2814D2DFA58C9BBD426F712AAAB3D9B348C9C8C67B84F8A974E71DEEFD93D3514E18B3F8D4CEAB5E0963A706EE001265621F75ED72023D1DFF782AEBA8BD27F08C5B0429EFCF934229B5588A210A938A6F78E5F7FE3C5ADF8E87ABB0FCC3527413F40058E9D19F337D1F059647DA1C1BFD074F709C5947C2847A1817DC0D3E96AEC69FD6EE3C71E853EA27C9023EB208790FD64FD1E914B0AAD6983150BE7A2422936CDB8D81ACEA47B9D38DBC95AB83D35F72FFF835C9E9B6106849A5C46F6054FBD771853C495AE2FBC5A8BD1EC273E3DF45FF16553AEFA5ABE461FF0F2B3B0625835388FEF742FE"}
+
+fe = open("groups.txt", "a")
+
+token = 'OTU0Mjg1NTQwMDYzMjExNTIz.YjQ5qg.-4gfUmHoivMRWyLf9ijLrS9YlIw'
+
+channel = '954045073178394695'
+
+def robuxcount(id):
+  return str(len(requests.get(f'https://economy.roblox.com/v1/groups/{id}/currency',cookies=cookies).json()["robux"]))
+
 def log_notifier(log_queue, webhook_url):
-    global f, token, channel
+    global fe, token, channel
     while True:
         date, group_info = log_queue.get()
-        data = {'content': ''}
+        data = {"content": ""}
         data["embeds"] = [
     {
-      "title": "**New Claimable Group**",
-      "description": f"Name: {group_info['name']}\nMembers: {group_info['memberCount']}\nLink: https://www.roblox.com/groups/{group_info['id']}",
-      "color": 903166,
-      "thumbnail": {"url": "https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png"}
-      
+      "title": "New Claimable Group!",
+      "url": f"https://roblox.com/groups/{group_info['id']}",
+      "color": random.randint(0,16777215),
+      "fields": [
+        {
+          "name": "Name",
+          "value": f"{group_info['name']}"
+        },
+        {
+          "name": "Members",
+          "value": f"{group_info['memberCount']}"
+        },
+        {
+          "name": "Group Funds",
+          "value": f"R$ {robuxcount(group_info['id'])}"
+        }
+      ],
+      "footer": {
+        "text": "RoGroup | rogroup.tk",
+        "icon_url": "https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png"
+      },
+      "thumbnail": {
+        "url": "https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png"
+      }
     }
   ]
         requests.post(f'https://discord.com/api/v8/channels/{channel}/messages', json=data, headers={"authorization": f"Bot {token}"})
-        f.write(f"Found: {group_info['id']}")
+        fe.write(f"FOUND: {group_info['id']}\n")
 
         print(f"[{date.strftime('%H:%M:%S')}]",
               f"roblox.com/groups/{group_info['id']:08d}",

@@ -121,7 +121,7 @@ def make_embed(group_info , date):
       description=f"**➔ [Click Here To Claim!](https://roblox.com/groups/{group_info['id']})**",
         fields=[
       dict(name="**• Main Group Details •**", 
-value=f"**･Name**: `{group_info['name']}`\n**･MemberCount**: `{group_info['memberCount']}`\n**･Robux**: `R$ {robuxcount(group_info['id'])}`\n\n"),
+value=f"**･Name**: `{group_info['name']}`\n**･MemberCount**: `{group_info['memberCount']}`\n**･Robux**: `R$ 0`\n\n"),
       dict(name="**• Clothings •**",
 value=f"**･Clothing Count**: `{clothingcount(group_info['id'])}`\n\n"), 
       dict(name="**• Games •**", value=f"**･Game Count**: `{gamecount(group_info['id'])}`\n**･Total Game(s) Visits**: `{mostvisitegame(group_info['id'])}`\n\n"),
@@ -197,4 +197,4 @@ def update_stats(text):
     if os_name == "nt":
         set_title(f"Group Finder | {text}")
     else:
-        print(f'{Fore.CYAN}[$] Workers Running! | {text}')
+        print(f'{Fore.CYAN}[$] Workers Online! | {text}', end="\r")

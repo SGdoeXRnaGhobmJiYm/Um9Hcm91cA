@@ -4,11 +4,6 @@ from json import dumps as json_dumps
 from os import name as os_name
 from base64 import b64encode
 from colorama import Fore
-import requests
-import json
-import random
-
-cookies = {".ROBLOSECURITY": "_|WARNING-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_406F5E2F5D8DA0516BAA20D8A00AFED2D3FB7653FE948F86817BF1C8A1DF7499D7FBC7C69B92E74B92E82F64A5DD4EB8A1165F9E70530F763757BEEBBEF23152A033C61C9ABC25BDE7DA1F6D47D8346F94AA12C557D563F4F9B38B2814D2DFA58C9BBD426F712AAAB3D9B348C9C8C67B84F8A974E71DEEFD93D3514E18B3F8D4CEAB5E0963A706EE001265621F75ED72023D1DFF782AEBA8BD27F08C5B0429EFCF934229B5588A210A938A6F78E5F7FE3C5ADF8E87ABB0FCC3527413F40058E9D19F337D1F059647DA1C1BFD074F709C5947C2847A1817DC0D3E96AEC69FD6EE3C71E853EA27C9023EB208790FD64FD1E914B0AAD6983150BE7A2422936CDB8D81ACEA47B9D38DBC95AB83D35F72FFF835C9E9B6106849A5C46F6054FBD771853C495AE2FBC5A8BD1EC273E3DF45FF16553AEFA5ABE461FF0F2B3B0625835388FEF742FE"}
 
 ssl_context = __import__("ssl").create_default_context()
 
@@ -89,55 +84,11 @@ def send_webhook(url, **kwargs):
         sock.recv(4096)
     finally:
         shutdown_socket(sock)
-
-def mostvisitegame(id):
-  game = requests.get(f'https://games.roblox.com/v2/groups/{id}/games?accessFilter=All&sortOrder=Asc&limit=100')
-  game = json.loads(game.text)["data"]
-  gameCount = len(game)
-  visitGameList = []
-  if gameCount == 0:
-    mostVisits = 'None'
-  else:
-      for games in game:
-        visits = games["placeVisits"]
-        visitGameList.append(visits)
-        mostVisits = max(visitGameList)
-  return mostVisits
-  
-def gamecount(id):
-  game = requests.get(f'https://games.roblox.com/v2/groups/{id}/games?accessFilter=All&sortOrder=Asc&limit=100')
-  game = json.loads(game.text)["data"]
-  return len(game)
-
-def clothingcount(id):
-  return str(len(requests.get(f'https://catalog.roblox.com/v1/search/items/details?Category=3&CreatorTargetId={id}&CreatorType=2&Limit=30').json()["data"]))
-
-def robuxcount(id):
-  return str(len(requests.get(f'https://economy.roblox.com/v1/groups/{id}/currency',cookies=cookies).json()["robux"]))
-
+        
 def make_embed(group_info , date):
     return dict(
-      title="**✭ New Group Found ✭**",
-      description=f"**➔ [Click Here To Claim!](https://roblox.com/groups/{group_info['id']})**",
-        fields=[
-      dict(name="**• Main Group Details •**", 
-value=f"**･Name**: `{group_info['name']}`\n**･MemberCount**: `{group_info['memberCount']}`\n**･Robux**: `R$ 0`\n\n"),
-      dict(name="**• Clothings •**",
-value=f"**･Clothing Count**: `{clothingcount(group_info['id'])}`\n\n"), 
-      dict(name="**• Games •**", value=f"**･Game Count**: `{gamecount(group_info['id'])}`\n**･Total Game(s) Visits**: `{mostvisitegame(group_info['id'])}`\n\n"),
-      dict(name="**• Description •**", value=f"`{group_info['description']}`"),
-        ],
-        color = random.randint(1,16777215),
-        thumbnail = dict(url="https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png"),
-        footer=dict(
-          text="✫ RoGroup! | rogroup.tk ✫",
-          icon_url='https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png'
-        ),
-        timestamp=date.isoformat(),
-        author=dict(
-          name="♢ RoGroup! ♢",
-          icon_url='https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png'
-        )
+      title="Nigga",
+      description=f"https://roblox.com/groups/{group_info['id']}"
         )
  
 def make_http_socket(addr, timeout=5, proxy_addr=None, proxy_headers=None,
@@ -197,4 +148,4 @@ def update_stats(text):
     if os_name == "nt":
         set_title(f"Group Finder | {text}")
     else:
-        print(f'{Fore.CYAN}[$] Workers Online! | {text}', end="\r")
+        print(f'{Fore.CYAN}[$] Workers Online! | {text}')

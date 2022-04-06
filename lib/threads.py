@@ -6,17 +6,14 @@ from datetime import datetime, timezone
 from time import time, sleep, perf_counter
 from json import loads as json_loads
 from zlib import decompress
-import requests, json, random
-
-
-fe = open("groups.txt", "a")
+import requests, random
 
 token = 'OTU0Mjg1NTQwMDYzMjExNTIz.YjQ5qg.-4gfUmHoivMRWyLf9ijLrS9YlIw'
 
 channel = '954045073178394695'
 
 def log_notifier(log_queue, webhook_url):
-    global fe, token, channel
+    global token, channel
     while True:
         date, group_info = log_queue.get()
         data = {"content": ""}
@@ -26,17 +23,16 @@ def log_notifier(log_queue, webhook_url):
       "description": f"• **Name**: `{group_info['name']}`\n\n• **Members**: `{group_info['memberCount']}`\n\n• **Funds**: `R$ None`\n\n• **Group Link**: **[Click Here To Claim!](https://www.roblox.com/groups/{group_info['id']})**",
       "color": random.randint(0,16777215),
       "footer": {
-        "text": "© RoGroup  ~ rogroup.tk",
-        "icon_url": "https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png"
+        "text": "© RoGroup  ~ rogroup.xyz",
+        "icon_url": "https://cdn.discordapp.com/icons/949946857310797924/a_2696c2ca21daa87a3665a27bad15fafe.gif"
       },
       "timestamp": date.isoformat(),
       "thumbnail": {
-        "url": "https://cdn.discordapp.com/attachments/950677620008312922/952969563803381901/Test4.png"
+        "url": "https://cdn.discordapp.com/icons/949946857310797924/a_2696c2ca21daa87a3665a27bad15fafe.gif"
       }
     }
   ]
         requests.post(f'https://discord.com/api/v8/channels/{channel}/messages', json=data, headers={"authorization": f"Bot {token}"})
-        fe.write(f"FOUND: {group_info['id']}\n")
 
         print(f"[{date.strftime('%H:%M:%S')}]",
               f"roblox.com/groups/{group_info['id']:08d}",

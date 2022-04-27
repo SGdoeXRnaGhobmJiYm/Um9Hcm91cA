@@ -21,5 +21,5 @@ def stat_updater(count_queue):
                 continue
             total_count += count
         
-        print(f"\rTotal Groups Found: {foundcount} | CPM: {total_count}", end="\n")
+        print(f"\rWorkers Online | CPM: {total_count}", end="\n")
         sleep(0.1)

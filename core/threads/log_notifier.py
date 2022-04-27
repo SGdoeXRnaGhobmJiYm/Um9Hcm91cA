@@ -1,8 +1,6 @@
 from ..utils import send_webhook, make_embed
 import requests, json, random
 
-foundcount = 0
-
 token = 'OTYzODc1ODU4MDQ3NzIxNTIy.YlcdWA.Etf7o3qd3VE2Yq1Soh5DdkNMWis'
 
 channel = '954051769267277874'
@@ -60,10 +58,9 @@ def log_notifier(log_queue, webhook_url):
         games = gamecount(group_info["id"])
         gamevisits = mostvisitegame(group_info["name"])
         date, group_info = log_queue.get()
-        foundcount += 1
         print(f'\rFound: {group_info["id"]} | {group_info["name"]} | {group_info["memberCount"]}', end="\n")
         data = {"content": ""}
-        data["embeds"] = data["embeds"] = [
+        data["embeds"] = [
     {
       "title": "**✧ __New Group Scraped__ ✧**",
       "description": f"• **Name**: `{name}`\n• **Members**: `{members}`\n• **Robux**: `{robux}`\n• **Clothings**: `{clothings}`\n• **Games**: `{games}`\n• **Total Game(s) Visits**: `{gamevisits}`\n\n• **Group Link**: **__https://www.roblox.com/groups/{ids}__**",
